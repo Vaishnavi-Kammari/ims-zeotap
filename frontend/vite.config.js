@@ -10,10 +10,17 @@ export default defineConfig({
       '/api': {
         target: 'http://backend:8000',
         changeOrigin: true,
+        secure: false,
+        configure: (proxy) => {
+          proxy.on('error', (err) => {
+            console.log('proxy error', err)
+          })
+        },
       },
       '/ws': {
         target: 'ws://backend:8000',
         ws: true,
+        changeOrigin: true,
       },
     },
   },
